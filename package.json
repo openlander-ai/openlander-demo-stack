@@ -1,0 +1,35 @@
+{
+  "name": "openlander-demo-stack",
+  "version": "0.1.0",
+  "description": "A tiny full-stack demo app for OpenLander: Node + Postgres + Redis in one deployable service.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build && node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "openlander",
+    "demo",
+    "postgres",
+    "redis"
+  ],
+  "author": "OpenLander",
+  "license": "MIT",
+  "dependencies": {
+    "@hono/node-server": "^2.0.2",
+    "hono": "^4.12.18",
+    "pg": "^8.20.0",
+    "redis": "^5.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "@types/pg": "^8.20.0",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
