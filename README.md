@@ -51,7 +51,25 @@ npm run build
 docker compose up --build
 ```
 
-Then open <http://localhost:3000>.
+The compose file intentionally uses `expose` instead of host `ports` so
+OpenLander can own routing and port assignment. For direct local browser access,
+add a temporary override:
+
+```yaml
+# docker-compose.local.yml
+services:
+  app:
+    ports:
+      - "3000:3000"
+```
+
+Then run:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+```
+
+Open <http://localhost:3000>.
 
 ## API
 
