@@ -1,10 +1,11 @@
 # OpenLander Demo Stack
 
-A tiny full-stack demo app for OpenLander.
+A small full-stack demo app for OpenLander managed-service workflows.
 
-It is intentionally small, fast to build, and dependency-rich enough to show the
-OpenLander value proposition: give an agent one Git repo, and it can deploy the
-app plus managed Postgres and Redis.
+This is an advanced demo. For a first OpenLander deploy, use the smaller
+[`openlander-demo-app`](https://github.com/openlander-ai/openlander-demo-app)
+instead. This stack requires Postgres and Redis connection strings; OpenLander
+0.1 may ask you or your agent to provide those values before deployment.
 
 ## What it demonstrates
 
@@ -21,14 +22,17 @@ After connecting your OpenLander MCP server, try:
 
 ```text
 Deploy https://github.com/openlander-ai/openlander-demo-stack to OpenLander.
-Use the default branch. Let OpenLander provision the required Postgres and Redis services.
+Use the default branch. If OpenLander reports missing DATABASE_URL or REDIS_URL,
+create or attach project-scoped Postgres and Redis services first, then update
+the deploy plan with the connection strings.
 ```
 
 Expected result:
 
 1. OpenLander creates a deploy plan.
 2. The plan detects `pg` and `redis` package dependencies.
-3. OpenLander provisions or reuses Postgres and Redis.
+3. OpenLander either receives existing connection strings or helps you provision
+   project-scoped Postgres and Redis services.
 4. Runtime env vars are injected into the app.
 5. The app boots and `/health` returns OK.
 
@@ -40,8 +44,9 @@ Expected result:
 | `REDIS_URL`    | yes      | Redis connection string                      |
 | `PORT`         | no       | HTTP port. Defaults to `3000`.               |
 
-`.env.example` leaves connection strings empty on purpose. OpenLander should
-inject real values during deployment.
+`.env.example` leaves connection strings empty on purpose. In OpenLander 0.1,
+agents should treat missing connection strings as required input unless a
+project-scoped managed service has already been created and connected.
 
 ## Local development
 
@@ -89,5 +94,5 @@ curl -X POST http://localhost:3000/api/events \
 ## Why this app exists
 
 `nginx:alpine` proves that a container can start. This app proves more:
-OpenLander can reason about a real app, provision dependencies, inject env vars,
-and show a useful health signal after deploy.
+OpenLander can reason about a real app, inject dependency configuration, and
+show a useful health signal after deploy.
